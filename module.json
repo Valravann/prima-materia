@@ -4,7 +4,7 @@
   "title": "Prima Materia",
   "description": "A system-agnostic symbolic oracle and narrative engine for Foundry VTT v14.",
   "version": "0.1.0",
-  "manifest": "https://github.com/valravan/prima-materia/releases/download/v0.1.0/module.json",
+  "manifest": "https://raw.githubusercontent.com/Valravann/prima-materia/refs/heads/main/module.json",
   "download": "https://github.com/valravan/prima-materia/releases/download/v0.1.0/prima-materia.zip",
   "authors": [
     {
