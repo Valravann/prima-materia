@@ -2,6 +2,7 @@ import { PrimaMateriaOracleApp } from "../applications/oracle-app.js";
 import { PrimaMateriaPortentApp } from "../applications/portent-app.js";
 import { PrimaMateriaTintTracker } from "../applications/tint-tracker.js";
 import { PrimaMateriaFrameSelector } from "../applications/frame-selector.js";
+import { PrimaMateriaOracleSidebarTab } from "../applications/oracle-sidebar-tab.js";
 
 const MODULE_ID = "prima-materia";
 const MODULE_PATH = `modules/${MODULE_ID}`;
@@ -1399,24 +1400,65 @@ function registerSettings() {
   });
 }
 
-function registerSidebarLauncher() {
-  Hooks.on("renderSettings", (_app, html) => {
+function registerSidebarTab() {
+  const sidebarTabs = CONFIG.ui?.sidebar?.TABS;
+  if (!sidebarTabs || sidebarTabs.primaMateria) return;
+
+  const orderedTabs = {};
+  let inserted = false;
+
+  for (const [key, value] of Object.entries(sidebarTabs)) {
+    orderedTabs[key] = value;
+    if (key === "journal") {
+      orderedTabs.primaMateria = {
+        tooltip: "Prima Materia Oracle",
+        icon: "fa-solid fa-sparkles",
+      };
+      inserted = true;
+    }
+  }
+
+  if (!inserted) {
+    orderedTabs.primaMateria = {
+      tooltip: "Prima Materia Oracle",
+      icon: "fa-solid fa-sparkles",
+    };
+  }
+
+  CONFIG.ui.sidebar.TABS = orderedTabs;
+  CONFIG.ui.primaMateria = PrimaMateriaOracleSidebarTab;
+}
+
+function registerSidebarLauncherBehavior() {
+  Hooks.on("renderSidebar", (_app, html) => {
     const root = html instanceof HTMLElement ? html : html?.[0];
-    if (!root || root.querySelector(".prima-materia-sidebar-launcher")) return;
+    if (!root) return;
 
-    const wrapper = document.createElement("div");
-    wrapper.className = "prima-materia-sidebar-launcher";
-    wrapper.innerHTML = `
-      <button type="button">
-        <i class="fa-solid fa-sparkles"></i>
-        <span>Prima Materia Oracle</span>
-      </button>
-    `;
+    const launcher = root.querySelector('[data-tab="primaMateria"]');
+    if (!launcher || launcher.dataset.pmLauncherBound === "true") return;
 
-    wrapper
-      .querySelector("button")
-      ?.addEventListener("click", () => openOracle());
-    root.prepend(wrapper);
+    launcher.dataset.pmLauncherBound = "true";
+    launcher.classList.add("prima-materia-sidebar-launcher-button");
+    launcher.setAttribute("title", "Open Prima Materia Oracle");
+    launcher.setAttribute("aria-label", "Open Prima Materia Oracle");
+
+    const openFromLauncher = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      event.stopImmediatePropagation?.();
+      openOracle();
+    };
+
+    launcher.addEventListener("pointerdown", openFromLauncher, true);
+    launcher.addEventListener("click", openFromLauncher, true);
+    launcher.addEventListener(
+      "keydown",
+      (event) => {
+        if (!["Enter", " ", "Spacebar"].includes(event.key)) return;
+        openFromLauncher(event);
+      },
+      true,
+    );
   });
 }
 
@@ -1521,6 +1563,8 @@ const api = {
 
 Hooks.once("init", () => {
   registerSettings();
+  registerSidebarTab();
+  registerSidebarLauncherBehavior();
   game.modules.get(MODULE_ID).api = api;
 });
 
@@ -1557,5 +1601,3 @@ Hooks.on("updateUser", (user, changes) => {
 Hooks.once("diceSoNiceReady", (dice3d) => {
   registerDiceSoNice(dice3d);
 });
-
-registerSidebarLauncher();

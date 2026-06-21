@@ -161,7 +161,7 @@ When `Dice So Nice` is active and Prima Materia integration is enabled, the modu
 1. Copy the `prima-materia` folder into your Foundry user data `modules/` directory.
 2. Launch Foundry VTT v14.
 3. Enable `Prima Materia` in your world.
-4. Open the Settings sidebar and use the `Prima Materia Oracle` launcher.
+4. Use the `Prima Materia` sparkles tab in the main sidebar to open the oracle.
 
 ### Manifest install
 

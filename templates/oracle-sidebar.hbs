@@ -1,0 +1,59 @@
+<section class="prima-materia prima-materia-sidebar-launcher">
+  <div class="pm-panel">
+    <div class="pm-section-header">
+      <h2>Prima Materia Oracle</h2>
+      <p>
+        Quick access to the symbolic oracle tools. Open the oracle window to use
+        Peek, Pull / Pass, Pinch, Pluck, or Portent.
+      </p>
+    </div>
+
+    <div class="pm-action-row pm-sidebar-launcher-actions">
+      <button type="button" data-action="open-oracle">
+        <i class="fa-solid fa-sparkles"></i>
+        <span>Open Oracle</span>
+      </button>
+      <button type="button" data-action="open-portent">
+        <i class="fa-solid fa-stars"></i>
+        <span>Open Portent</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="pm-panel pm-sidebar-launcher-status">
+    <div class="pm-section-header">
+      <h3>Current Session Lens</h3>
+      <p>
+        These tell you how the next reading should be framed before you interpret
+        the symbols.
+      </p>
+    </div>
+
+    <div class="pm-summary-card">
+      <h4>Frame</h4>
+      <p><strong>{{currentFrameLabel}}</strong></p>
+      <p>{{currentFrameDescription}}</p>
+    </div>
+
+    <div class="pm-summary-card">
+      <h4>Tint</h4>
+      <p><strong>{{currentTintLabel}}</strong></p>
+      <p>{{currentTintDescription}}</p>
+    </div>
+
+    <div class="pm-action-row pm-sidebar-launcher-actions secondary">
+      {{#if showFrameSelector}}
+        <button type="button" data-action="open-frame-widget">
+          <i class="fa-solid fa-compass"></i>
+          <span>Open Frame Selector</span>
+        </button>
+      {{/if}}
+      {{#if showTintWidget}}
+        <button type="button" data-action="open-tint-widget">
+          <i class="fa-solid fa-droplet"></i>
+          <span>Open Tint Tracker</span>
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</section>

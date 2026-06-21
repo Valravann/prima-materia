@@ -316,15 +316,34 @@ button.pm-badge-button {
 }
 
 .prima-materia-sidebar-launcher {
-    margin: 0 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 0.35rem;
 }
 
-.prima-materia-sidebar-launcher button {
-    width: 100%;
-    display: flex;
+.prima-materia-sidebar-launcher .pm-panel {
+    padding: 0.8rem;
+}
+
+.prima-materia-sidebar-launcher .pm-summary-card + .pm-summary-card {
+    margin-top: 0.65rem;
+}
+
+.prima-materia-sidebar-launcher .pm-sidebar-launcher-actions {
+    margin-top: 0.75rem;
+}
+
+.prima-materia-sidebar-launcher .pm-sidebar-launcher-actions button {
+    flex: 1 1 100%;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+}
+
+.prima-materia-sidebar-launcher .pm-sidebar-launcher-actions.secondary button {
+    flex-basis: 100%;
 }
 
 .prima-materia-chat-entry {
