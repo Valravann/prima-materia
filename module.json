@@ -1,0 +1,20 @@
+{
+  "id": "prima-materia",
+  "type": "module",
+  "title": "Prima Materia",
+  "description": "A system-agnostic symbolic oracle and narrative engine for Foundry VTT v14.",
+  "version": "0.1.0",
+  "authors": [
+    {
+      "name": "OpenAI"
+    }
+  ],
+  "compatibility": {
+    "minimum": "14",
+    "verified": "14.363"
+  },
+  "esmodules": ["scripts/prima-materia.js"],
+  "styles": ["styles/prima-materia.css"],
+  "readme": "README.md",
+  "media": []
+}

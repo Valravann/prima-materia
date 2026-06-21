@@ -1,0 +1,272 @@
+<section class="prima-materia prima-materia-oracle">
+  <header class="pm-panel pm-header-panel">
+    <div>
+      <h2>Prima Materia Oracle</h2>
+      <p class="pm-subtle">System-agnostic symbolic oracle, procedural prompt engine, and solo play support.</p>
+    </div>
+    <div class="pm-badges">
+      <button type="button" class="pm-badge pm-badge-button" data-action="open-frame-widget" title="Frame decides where to aim the reading."><strong>Frame</strong> {{currentFrameLabel}}</button>
+      <button type="button" class="pm-badge pm-badge-button" data-action="open-tint-widget" title="Tint colors the tone of the reading."><strong>Tint</strong> {{currentTintLabel}}</button>
+    </div>
+  </header>
+
+  <section class="pm-panel pm-context-panel">
+    <p><strong>Frame:</strong> {{currentFrameDescription}}</p>
+    <p><strong>Tint:</strong> {{currentTintDescription}}</p>
+  </section>
+
+  <nav class="pm-mode-grid">
+    <button type="button" class="pm-mode-button {{peekActiveClass}}" data-action="set-view" data-view="peek">Peek</button>
+    <button type="button" class="pm-mode-button {{pullPassActiveClass}}" data-action="set-view" data-view="pullPass">Pull / Pass</button>
+    <button type="button" class="pm-mode-button {{pinchActiveClass}}" data-action="set-view" data-view="pinch">Pinch</button>
+    <button type="button" class="pm-mode-button {{pluckActiveClass}}" data-action="set-view" data-view="pluck">Pluck</button>
+    <button type="button" class="pm-mode-button" data-action="open-portent">Portent</button>
+  </nav>
+
+  {{#if isPeek}}
+    <section class="pm-panel">
+      <header class="pm-section-header">
+        <h3>Peek</h3>
+        <p>Roll one die for a quick answer, omen, or prompt. Use Sol for the clarifying or constructive expression of a symbol, and Nox for its costly, unstable, or shadowed expression.</p>
+      </header>
+      <div class="pm-action-row">
+        <button type="button" data-action="peek-sol">Roll Sol</button>
+        <button type="button" data-action="peek-nox">Roll Nox</button>
+        <button type="button" data-action="save-journal" {{peekSaveDisabled}}>Save To Journal</button>
+      </div>
+
+      {{#if result}}
+        <article class="pm-result-card {{result.cssClass}}">
+          <div class="pm-result-heading">
+            <span class="pm-pill">{{result.dieLabel}}</span>
+            <strong>{{result.result.symbol}}</strong>
+          </div>
+          {{#if result.result.icon}}
+            <div class="pm-symbol-display">
+              <img class="pm-symbol-display-icon" src="{{result.result.icon}}" alt="{{result.result.symbol}}" />
+            </div>
+          {{/if}}
+          <p class="pm-result-meaning">{{result.result.meaning}}</p>
+          <div class="pm-keywords">
+            {{#each result.result.keywords}}
+              <span class="pm-keyword">{{this}}</span>
+            {{/each}}
+          </div>
+          {{#if showInterpretations}}
+            <details class="pm-interpretation-details">
+              <summary>Interpretation</summary>
+              <p class="pm-result-copy pm-interpretation-text">{{result.narrative}}</p>
+            </details>
+          {{/if}}
+        </article>
+      {{/if}}
+    </section>
+  {{/if}}
+
+  {{#if isPullPass}}
+    <section class="pm-panel">
+      <header class="pm-section-header">
+        <h3>Pull / Pass</h3>
+        <p>Roll both polarities, then choose which symbol to foreground. The one you pull becomes the active thread; the one you pass becomes context, cost, or resistance.</p>
+      </header>
+      <div class="pm-action-row">
+        <button type="button" data-action="roll-pull-pass">Roll Sol + Nox</button>
+        <button type="button" data-action="save-journal" {{pullPassSaveDisabled}}>Save To Journal</button>
+      </div>
+
+      {{#if result}}
+        <div class="pm-dual-grid">
+          <article class="pm-result-card sol">
+            <div class="pm-result-heading">
+              <span class="pm-pill">Sol</span>
+              <strong>{{result.result.sol.symbol}}</strong>
+            </div>
+            {{#if result.result.sol.icon}}
+              <div class="pm-symbol-display">
+                <img class="pm-symbol-display-icon" src="{{result.result.sol.icon}}" alt="{{result.result.sol.symbol}}" />
+              </div>
+            {{/if}}
+            <p class="pm-result-meaning">{{result.result.sol.meaning}}</p>
+            <div class="pm-keywords">
+              {{#each result.result.sol.keywords}}
+                <span class="pm-keyword">{{this}}</span>
+              {{/each}}
+            </div>
+            <button type="button" data-action="choose-pull-pass" data-choice="sol">Pull Sol (pass Nox)</button>
+          </article>
+
+          <article class="pm-result-card nox">
+            <div class="pm-result-heading">
+              <span class="pm-pill">Nox</span>
+              <strong>{{result.result.nox.symbol}}</strong>
+            </div>
+            {{#if result.result.nox.icon}}
+              <div class="pm-symbol-display">
+                <img class="pm-symbol-display-icon" src="{{result.result.nox.icon}}" alt="{{result.result.nox.symbol}}" />
+              </div>
+            {{/if}}
+            <p class="pm-result-meaning">{{result.result.nox.meaning}}</p>
+            <div class="pm-keywords">
+              {{#each result.result.nox.keywords}}
+                <span class="pm-keyword">{{this}}</span>
+              {{/each}}
+            </div>
+            <button type="button" data-action="choose-pull-pass" data-choice="nox">Pull Nox (pass Sol)</button>
+          </article>
+        </div>
+
+        {{#if result.result.pulled}}
+          <article class="pm-summary-card">
+            <h4>Chosen Thread</h4>
+            <p><strong>Pulled:</strong> {{result.result.pulled}}</p>
+            <p><strong>Passed:</strong> {{result.result.passed}}</p>
+            {{#if showInterpretations}}
+              <details class="pm-interpretation-details">
+                <summary>Interpretation</summary>
+                <p class="pm-interpretation-text">{{result.narrative}}</p>
+              </details>
+            {{/if}}
+            {{#if result.result.lensShift}}
+              <p class="pm-subtle"><strong>Lens Shift:</strong> {{result.result.lensShift.previousTintLabel}} → {{result.result.lensShift.nextTintLabel}} (won by {{result.result.lensShift.winnerLabel}}). Matching Sol and Nox recolors the session tint for later readings.</p>
+            {{/if}}
+          </article>
+        {{else}}
+          <article class="pm-summary-card">
+            <p class="pm-subtle">Choose Pull Sol or Pull Nox before posting this Pull / Pass result to chat or saving it to the journal.</p>
+          </article>
+        {{/if}}
+      {{/if}}
+    </section>
+  {{/if}}
+
+  {{#if isPinch}}
+    <section class="pm-panel">
+      <header class="pm-section-header">
+        <h3>Pinch</h3>
+        <p>Hold both poles in the same reading. Add Together blends them, Smash Together puts them in tension, and a Syzygy follow-up names the relationship between them.</p>
+      </header>
+      <div class="pm-action-row">
+        <button type="button" data-action="roll-pinch">Roll Pinch</button>
+        <button type="button" data-action="save-journal" {{pinchSaveDisabled}}>Save To Journal</button>
+      </div>
+
+      {{#if result}}
+        <article class="pm-summary-card">
+          <h4>{{result.result.raw}}</h4>
+          {{#if showInterpretations}}
+            <details class="pm-interpretation-details">
+              <summary>Interpretation</summary>
+              <p class="pm-interpretation-text">{{result.narrative}}</p>
+            </details>
+          {{/if}}
+          {{#if result.result.lensShift}}
+            <p class="pm-subtle"><strong>Lens Shift:</strong> {{result.result.lensShift.previousTintLabel}} → {{result.result.lensShift.nextTintLabel}} (won by {{result.result.lensShift.winnerLabel}}). Matching Sol and Nox recolors the session tint for later readings.</p>
+          {{/if}}
+          {{#unless result.publishReady}}
+            <p class="pm-subtle">Choose Add Together, Smash Together, or Roll Syzygy Follow-up before posting this Pinch result to chat or saving it to the journal.</p>
+          {{/unless}}
+        </article>
+
+        <div class="pm-action-row">
+          <button type="button" data-action="pinch-style" data-style="add">Add Together (blend)</button>
+          <button type="button" data-action="pinch-style" data-style="smash">Smash Together (conflict)</button>
+          <button type="button" data-action="pinch-syzygy">Roll Syzygy (relationship)</button>
+        </div>
+
+        <div class="pm-dual-grid">
+          <article class="pm-result-card sol">
+            <div class="pm-result-heading">
+              <span class="pm-pill">Sol</span>
+              <strong>{{result.result.sol.symbol}}</strong>
+            </div>
+            {{#if result.result.sol.icon}}
+              <div class="pm-symbol-display">
+                <img class="pm-symbol-display-icon" src="{{result.result.sol.icon}}" alt="{{result.result.sol.symbol}}" />
+              </div>
+            {{/if}}
+            <p class="pm-result-meaning">{{result.result.sol.meaning}}</p>
+          </article>
+          <article class="pm-result-card nox">
+            <div class="pm-result-heading">
+              <span class="pm-pill">Nox</span>
+              <strong>{{result.result.nox.symbol}}</strong>
+            </div>
+            {{#if result.result.nox.icon}}
+              <div class="pm-symbol-display">
+                <img class="pm-symbol-display-icon" src="{{result.result.nox.icon}}" alt="{{result.result.nox.symbol}}" />
+              </div>
+            {{/if}}
+            <p class="pm-result-meaning">{{result.result.nox.meaning}}</p>
+          </article>
+        </div>
+
+        {{#if result.result.syzygy}}
+          <article class="pm-summary-card syzygy">
+            <h4>Syzygy</h4>
+            {{#if result.result.syzygy.icon}}
+              <div class="pm-symbol-display">
+                <img class="pm-symbol-display-icon" src="{{result.result.syzygy.icon}}" alt="{{result.result.syzygy.relationship}}" />
+              </div>
+            {{/if}}
+            <p><strong>{{result.result.syzygy.relationship}}</strong> — {{result.result.syzygy.meaning}}</p>
+          </article>
+        {{/if}}
+      {{/if}}
+    </section>
+  {{/if}}
+
+  {{#if isPluck}}
+    <section class="pm-panel">
+      <header class="pm-section-header">
+        <h3>Pluck</h3>
+        <p>Select an external reference table, then roll Sol and Nox to get the symbol pair you need to consult it. By default, read Sol as the brighter or more active axis and Nox as the shadowed, costly, or complicating axis.</p>
+      </header>
+      <div class="pm-form-row">
+        <label for="pm-pluck-key">Reference Table</label>
+        <select id="pm-pluck-key" name="pluck-key">
+          {{#each pluckOptions}}
+            <option value="{{this.value}}" title="{{this.description}}" {{this.selected}}>{{this.label}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <p class="pm-subtle">{{currentPluckDescription}}</p>
+      <div class="pm-action-row">
+        <button type="button" data-action="draw-pluck">Roll Symbols</button>
+        <button type="button" data-action="save-journal" {{pluckSaveDisabled}}>Save To Journal</button>
+      </div>
+
+      {{#if result}}
+        <article class="pm-summary-card">
+          <h4>{{result.result.tableLabel}}</h4>
+          <p class="pm-subtle">Consult the selected external table using these symbols.</p>
+        </article>
+
+        <div class="pm-dual-grid">
+          <article class="pm-result-card sol">
+            <div class="pm-result-heading">
+              <span class="pm-pill">Sol</span>
+              <strong>{{result.result.sol.symbol}}</strong>
+            </div>
+            {{#if result.result.sol.icon}}
+              <div class="pm-symbol-display">
+                <img class="pm-symbol-display-icon" src="{{result.result.sol.icon}}" alt="{{result.result.sol.symbol}}" />
+              </div>
+            {{/if}}
+          </article>
+
+          <article class="pm-result-card nox">
+            <div class="pm-result-heading">
+              <span class="pm-pill">Nox</span>
+              <strong>{{result.result.nox.symbol}}</strong>
+            </div>
+            {{#if result.result.nox.icon}}
+              <div class="pm-symbol-display">
+                <img class="pm-symbol-display-icon" src="{{result.result.nox.icon}}" alt="{{result.result.nox.symbol}}" />
+              </div>
+            {{/if}}
+          </article>
+        </div>
+      {{/if}}
+    </section>
+  {{/if}}
+</section>

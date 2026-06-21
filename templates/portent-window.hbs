@@ -1,0 +1,85 @@
+<section class="prima-materia prima-materia-portent">
+  <header class="pm-panel pm-header-panel portent">
+    <div>
+      <h2>Portent</h2>
+      <p class="pm-subtle">Roll Sol, Nox, and Syzygy to form a full oracle statement. Primary leads the reading, Syzygy names the link, and Secondary supplies the counterpart or field of action.</p>
+    </div>
+    <div class="pm-badges">
+      <span class="pm-badge" title="Frame decides where to aim the reading."><strong>Frame</strong> {{currentFrameLabel}}</span>
+      <span class="pm-badge" title="Tint colors the tone of the reading."><strong>Tint</strong> {{currentTintLabel}}</span>
+    </div>
+  </header>
+
+  <section class="pm-panel pm-context-panel">
+    <p><strong>Frame:</strong> {{currentFrameDescription}}</p>
+    <p><strong>Tint:</strong> {{currentTintDescription}}</p>
+  </section>
+
+  <section class="pm-panel">
+    <div class="pm-action-row">
+      <button type="button" data-action="roll-portent">Roll Portent</button>
+      <button type="button" data-action="save-journal" {{saveDisabled}}>Save To Journal</button>
+    </div>
+    <p class="pm-subtle">Portent reads the random Primary symbol as the leading force, the Syzygy die as the relationship, and the Secondary symbol as what the reading moves through or pushes against.</p>
+
+    {{#if result}}
+      <article class="pm-summary-card portent-statement">
+        <h3>{{result.statement}}</h3>
+        {{#if showInterpretations}}
+          <details class="pm-interpretation-details">
+            <summary>Interpretation</summary>
+            <p class="pm-interpretation-text">{{result.narrative}}</p>
+          </details>
+        {{/if}}
+      </article>
+
+      <div class="pm-triple-grid">
+        <article class="pm-result-card {{result.primaryCssClass}} emphasis">
+          <div class="pm-result-heading">
+            <span class="pm-pill">Primary</span>
+            <strong>{{result.result.primary}}</strong>
+          </div>
+          {{#if result.result.primaryIcon}}
+            <div class="pm-symbol-display">
+              <img class="pm-symbol-display-icon" src="{{result.result.primaryIcon}}" alt="{{result.result.primary}}" />
+            </div>
+          {{/if}}
+          <p class="pm-result-meaning">{{result.primaryMeaning}}</p>
+        </article>
+
+        <article class="pm-result-card syzygy">
+          <div class="pm-result-heading">
+            <span class="pm-pill">Syzygy</span>
+            <strong>{{result.result.relationship}}</strong>
+          </div>
+          {{#if result.result.relationshipIcon}}
+            <div class="pm-symbol-display">
+              <img class="pm-symbol-display-icon" src="{{result.result.relationshipIcon}}" alt="{{result.result.relationship}}" />
+            </div>
+          {{/if}}
+          <p class="pm-result-meaning">{{result.relationshipMeaning}}</p>
+        </article>
+
+        <article class="pm-result-card {{result.secondaryCssClass}}">
+          <div class="pm-result-heading">
+            <span class="pm-pill">Secondary</span>
+            <strong>{{result.result.secondary}}</strong>
+          </div>
+          {{#if result.result.secondaryIcon}}
+            <div class="pm-symbol-display">
+              <img class="pm-symbol-display-icon" src="{{result.result.secondaryIcon}}" alt="{{result.result.secondary}}" />
+            </div>
+          {{/if}}
+          <p class="pm-result-meaning">{{result.secondaryMeaning}}</p>
+        </article>
+      </div>
+
+      <article class="pm-summary-card">
+        {{#if result.lensShift}}
+          <p><strong>Lens Shift:</strong> {{result.lensShift.previousTintLabel}} → {{result.lensShift.nextTintLabel}} (won by {{result.lensShift.winnerLabel}})</p>
+          <p class="pm-subtle">Matching Sol and Nox recolor the session tint before the final statement is read, so future rolls inherit the new tone.</p>
+        {{/if}}
+      </article>
+    {{/if}}
+  </section>
+</section>

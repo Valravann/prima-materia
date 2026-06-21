@@ -1,0 +1,17 @@
+<section class="prima-materia prima-materia-widget prima-materia-frame-widget">
+  <header>
+    <h3>Current Frame</h3>
+  </header>
+  <div class="pm-widget-state">{{frameLabel}}</div>
+  <p class="pm-subtle">{{frameDescription}}</p>
+  <div class="pm-widget-actions vertical">
+    <button type="button" class="{{literalClass}}" data-action="set-frame" data-frame="literal" title="{{literalDescription}}">Literal</button>
+    <button type="button" class="{{personalClass}}" data-action="set-frame" data-frame="personal" title="{{personalDescription}}">Personal</button>
+    <button type="button" class="{{structuralClass}}" data-action="set-frame" data-frame="structural" title="{{structuralDescription}}">Structural</button>
+  </div>
+  <div class="pm-helper-list">
+    <p><strong>Literal:</strong> {{literalDescription}}</p>
+    <p><strong>Personal:</strong> {{personalDescription}}</p>
+    <p><strong>Structural:</strong> {{structuralDescription}}</p>
+  </div>
+</section>

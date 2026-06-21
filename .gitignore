@@ -1,0 +1,42 @@
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor settings
+.vscode/
+.idea/
+.zed/
+
+# Python tooling
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# Node / package manager
+node_modules/
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Build and archive artifacts
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+release/
+dist/
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Foundry / local runtime clutter
+worlds/
+Data/

@@ -1,0 +1,17 @@
+<section class="prima-materia prima-materia-widget prima-materia-tint-widget">
+  <header>
+    <h3>Current Tint</h3>
+  </header>
+  <div class="pm-widget-state tint-{{tint}}">{{tintLabel}}</div>
+  <p class="pm-subtle">{{tintDescription}}</p>
+  <div class="pm-widget-actions">
+    <button type="button" data-action="set-tint" data-tint="neutral" title="{{neutralDescription}}">Neutral</button>
+    <button type="button" data-action="set-tint" data-tint="day" title="{{dayDescription}}">Day</button>
+    <button type="button" data-action="set-tint" data-tint="night" title="{{nightDescription}}">Night</button>
+  </div>
+  <div class="pm-helper-list">
+    <p><strong>Neutral:</strong> {{neutralDescription}}</p>
+    <p><strong>Day:</strong> {{dayDescription}}</p>
+    <p><strong>Night:</strong> {{nightDescription}}</p>
+  </div>
+</section>
